@@ -42,7 +42,7 @@ classifier_name = "Disjoint_CNN"  # Choose the classifier name from aforemention
 epochs = 500
 Resample = 1  # Set to '1' for default Train and Test Sets, and '30' for running on all resampling
 # ----------------------------------------------------------------------------------------------------------------------
-for problem in datasets[16:]:
+for problem in datasets:
     # Load Data --------------------------------------------------------------------------------------------------------
     output_directory = os.getcwd() + '/Results_' + classifier_name + '/' + problem + '/'
     create_directory(output_directory)
