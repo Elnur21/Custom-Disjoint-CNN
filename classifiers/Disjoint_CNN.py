@@ -1,6 +1,6 @@
 import time
 from tensorflow import keras
-from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, ELU, Permute, MaxPooling2D
+from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, ELU, Reshape, Permute, MaxPooling2D
 from classifiers.classifiers import predict_model
 from utils.classifier_tools import create_class_weight
 from utils.tools import save_logs
@@ -17,13 +17,13 @@ class Classifier_Disjoint_CNN:
         # -----------------------------------------------------------------------
         if verbose:
             self.model.summary()
-        # self.model.save_weights(self.output_directory + 'model_init.weights.h5')
+        # self.model.save_weights(self.output_directory + 'model_init.keras')
 
     def build_model(self, input_shape, nb_classes):
 
         X_input = Input(shape=input_shape)
 
- 	    # Temporal Convolutions
+ 	# Temporal Convolutions
         conv1 = Conv2D(64, (8, 1), strides=1, padding="same", kernel_initializer='he_uniform')(X_input)
         conv1 = BatchNormalization()(conv1)
         conv1 = ELU(alpha=1.0)(conv1)
@@ -62,7 +62,7 @@ class Classifier_Disjoint_CNN:
         conv4 = BatchNormalization()(conv4)
         conv4 = ELU(alpha=1.0)(conv4)
 
-        MaxPool = MaxPooling2D(pool_size=(5, 1), strides=None, padding='same')(conv4)
+        MaxPool = MaxPooling2D(pool_size=(5, 1), strides=None, padding='valid')(conv4)
         gap_DCNN = keras.layers.GlobalAveragePooling2D()(MaxPool)
 
         dense = keras.layers.Dense(128, activation="relu")(gap_DCNN)

@@ -6,10 +6,10 @@
 #             "StandWalkJump","UWaveGestureLibrary"]
 
 # datasets = ["ArticularyWordRecognition","BasicMotions","Cricket",
-#             "DuckDuckGeese","EigenWorms", "Epilepsy","ERing","EthanolConcentration","FaceDetection","FingerMovements",
+#             "DuckDuckGeese", "Epilepsy","ERing","EthanolConcentration","FaceDetection","FingerMovements",
 #             "HandMovementDirection","Handwriting","Heartbeat",
-#             "Libras","LSST","MotorImagery","NATOPS","PEMS-SF","PenDigits","PhonemeSpectra",
+#             "Libras","LSST","NATOPS","PEMS-SF","PenDigits","PhonemeSpectra",
 #             "RacketSports", "SelfRegulationSCP1","SelfRegulationSCP2",
 #             "StandWalkJump","UWaveGestureLibrary"]
 
-datasets = ["EigenWorms","MotorImagery"]
+datasets = ["DuckDuckGeese"]

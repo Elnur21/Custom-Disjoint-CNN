@@ -36,7 +36,6 @@ def create_classifier(classifier_name, input_shape, nb_classes, verbose=False):
 ALL_Results = pd.DataFrame()
 ALL_Results_list = []
 problem_index = 0
-data_path = os.getcwd() + '/multivariate_ts/'
 # Hyper-Parameter Setting ----------------------------------------------------------------------------------------------
 classifier_name = "Disjoint_CNN"  # Choose the classifier name from aforementioned List
 epochs = 500
@@ -76,38 +75,39 @@ for problem in datasets:
         X_train=x_train.reshape(X_train.shape)
         X_test=x_test.reshape(X_test.shape)
 
-        sub_output_directory = output_directory + str(run + 1) + '/'
-        create_directory(sub_output_directory)
-        # X_train.shape
-        # Default Train and Test Set
-        x_train = X_train
-        x_test = X_test
-        y_train = Y_train
-        y_test = Y_test
-        
-        # Making Consistent with Keras Output
-        all_labels_new = np.concatenate((y_train, y_test), axis=0)
-        tmp = pd.get_dummies(all_labels_new).values
-        y_train = tmp[:len(y_train)]
-        y_test = tmp[len(y_train):]
+        for i in range(0, Resample):
+            sub_output_directory = output_directory + str(run + 1) + '/'
+            create_directory(sub_output_directory)
+            # X_train.shape
+            # Default Train and Test Set
+            x_train = X_train
+            x_test = X_test
+            y_train = Y_train
+            y_test = Y_test
+            
+            # Making Consistent with Keras Output
+            all_labels_new = np.concatenate((y_train, y_test), axis=0)
+            tmp = pd.get_dummies(all_labels_new).values
+            y_train = tmp[:len(y_train)]
+            y_test = tmp[len(y_train):]
 
-        # Making Consistent with Keras Input
-        if classifier_name == "FCN" or classifier_name == "ResNet" or classifier_name == "MLSTM_FCN":
-            x_train = x_train.reshape(x_train.shape[0], x_train.shape[2], x_train.shape[1])
-            x_test = x_test.reshape(x_test.shape[0], x_test.shape[2], x_test.shape[1])
-        else:
-            x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
-            x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
+            # Making Consistent with Keras Input
+            if classifier_name == "FCN" or classifier_name == "ResNet" or classifier_name == "MLSTM_FCN":
+                x_train = x_train.reshape(x_train.shape[0], x_train.shape[2], x_train.shape[1])
+                x_test = x_test.reshape(x_test.shape[0], x_test.shape[2], x_test.shape[1])
+            else:
+                x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
+                x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
 
-        # Dynamic Batch-size based on Data
-        if 'EigenWorms' in problem or 'DuckDuck' in problem:
-            batch_size = 1
-        else:
-            batch_size = 8
+            # Dynamic Batch-size based on Data
+            if 'EigenWorms' in problem or 'DuckDuck' in problem:
+                batch_size = 1
+            else:
+                batch_size = 8
 
-        val_index = np.random.randint(0, np.int(x_train.shape[0]), np.int(x_train.shape[0] / 10), dtype=int)
-        x_val = x_train[val_index, :]
-        y_val = y_train[val_index, :]
+            val_index = np.random.randint(0, np.int(x_train.shape[0]), np.int(x_train.shape[0] / 10), dtype=int)
+            x_val = x_train[val_index, :]
+            y_val = y_train[val_index, :]
 
         classifier = fit_classifier(all_labels_new, x_train, y_train, x_val, y_val, epochs, batch_size)
         metrics_test, conf_mat = classifier.predict(x_test, y_test, best=True)
@@ -134,6 +134,6 @@ for problem in datasets:
     problem_index = problem_index + 1
 
 ALL_Results = pd.DataFrame(ALL_Results_list)
-ALL_Results.to_csv(os.getcwd() + '/Results_Custom_' + classifier_name + '/'+'All_results1.csv')
+ALL_Results.to_csv(os.getcwd() + '/Results_' + classifier_name + '/'+'All_results1.csv')
 
 
