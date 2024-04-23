@@ -28,13 +28,13 @@ def fit_classifier(all_labels, X_train, y_train, X_val=None, y_val=None, epochs=
 
 def create_classifier(classifier_name, input_shape, nb_classes, verbose=False):
     if classifier_name == "Disjoint_CNN":
-        from classifiers import Disjoint_CNN
-        return Disjoint_CNN.Classifier_Disjoint_CNN(sub_output_directory, input_shape, nb_classes, verbose)
+        from classifiers import Custom_Disjoint_CNN
+        return Custom_Disjoint_CNN.Classifier_Disjoint_CNN(sub_output_directory, input_shape, nb_classes, verbose)
 
 
 # Problem Setting -----------------------------------------------------------------------------------------------------
 ALL_Results = pd.DataFrame()
-ALL_Results_list = []
+ALL_Results_Custom_list = []
 problem_index = 0
 # Hyper-Parameter Setting ----------------------------------------------------------------------------------------------
 classifier_name = "Disjoint_CNN"  # Choose the classifier name from aforementioned List
@@ -43,7 +43,7 @@ Resample = 1  # Set to '1' for default Train and Test Sets, and '30' for running
 # ----------------------------------------------------------------------------------------------------------------------
 for problem in datasets:
     # Load Data --------------------------------------------------------------------------------------------------------
-    output_directory = os.getcwd() + '/Results_' + classifier_name + '/' + problem + '/'
+    output_directory = os.getcwd() + '/Results_Custom_' + classifier_name + '/' + problem + '/'
     create_directory(output_directory)
     print("[Main] Problem: {}".format(problem))
     itr_result = [problem]
@@ -105,7 +105,7 @@ for problem in datasets:
             else:
                 batch_size = 8
 
-            val_index = np.random.randint(0, np.int(x_train.shape[0]), np.int(x_train.shape[0] / 10), dtype=int)
+            val_index = np.random.randint(0, np.int32(x_train.shape[0]), np.int32(x_train.shape[0] / 10), dtype=int)
             x_val = x_train[val_index, :]
             y_val = y_train[val_index, :]
 
@@ -126,14 +126,14 @@ for problem in datasets:
         itr_result.append(metrics.accuracy[1])
         sub_output_directory = []
 
-    if len(ALL_Results_list) == 0:
-        ALL_Results_list = np.hstack((ALL_Results_list, itr_result))
+    if len(ALL_Results_Custom_list) == 0:
+        ALL_Results_Custom_list = np.hstack((ALL_Results_Custom_list, itr_result))
     else:
-        ALL_Results_list = np.vstack((ALL_Results_list, itr_result))
+        ALL_Results_Custom_list = np.vstack((ALL_Results_Custom_list, itr_result))
 
     problem_index = problem_index + 1
 
-ALL_Results = pd.DataFrame(ALL_Results_list)
-ALL_Results.to_csv(os.getcwd() + '/Results_' + classifier_name + '/'+'All_results1.csv')
+ALL_Results = pd.DataFrame(ALL_Results_Custom_list)
+ALL_Results.to_csv(os.getcwd() + '/Results_Custom_' + classifier_name + '/'+'All_results1.csv')
 
 

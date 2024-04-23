@@ -5,11 +5,7 @@
 #             "RacketSports", "SelfRegulationSCP1","SelfRegulationSCP2","SpokenArabicDigits",
 #             "StandWalkJump","UWaveGestureLibrary"]
 
-# datasets = ["ArticularyWordRecognition","BasicMotions","Cricket",
-#             "DuckDuckGeese", "Epilepsy","ERing","EthanolConcentration","FaceDetection","FingerMovements",
-#             "HandMovementDirection","Handwriting","Heartbeat",
-#             "Libras","LSST","NATOPS","PEMS-SF","PenDigits","PhonemeSpectra",
-#             "RacketSports", "SelfRegulationSCP1","SelfRegulationSCP2",
-#             "StandWalkJump","UWaveGestureLibrary"]
+datasets = ["SelfRegulationSCP2",
+            "StandWalkJump","UWaveGestureLibrary"]
 
-datasets = ["DuckDuckGeese"]
+# datasets = ["DuckDuckGeese"]

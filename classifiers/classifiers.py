@@ -32,7 +32,7 @@ def predict_model(model, X, y, output_dir=''):
     # make a prediction with the model
     if output_dir.find('EigenWorms') or output_dir.find('DuckDuck'):
         batch_size = np.ceil(X.shape[0] / (8 * (np.max(y.shape[1]) + 1)))
-        yhat = model.predict(X, np.int(batch_size))
+        yhat = model.predict(X, np.int32(batch_size))
     else:
         yhat = model.predict(X)
 

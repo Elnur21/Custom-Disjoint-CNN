@@ -94,7 +94,7 @@ class Classifier_Disjoint_CNN:
         self.hist = self.model.fit(Ximg_train, yimg_train,
                                    validation_data=[Ximg_val, yimg_val],
                                    class_weight=class_weight,
-                                   verbose=0,
+                                   verbose=1,
                                    epochs=epochs,
                                    batch_size=mini_batch_size,
                                    callbacks=self.callbacks)
